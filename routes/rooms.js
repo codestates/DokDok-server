@@ -2,7 +2,8 @@ const express = require('express');
 const chattingController = require('../controllers/chattings');
 const router = express.Router();
 
-router.post('/:id', chattingController.sendMessage);
-router.get('/:id', chattingController.readCurrentRoom);
+router.post('/', chattingController.createRoom);
+router.patch('/:id', chattingController.deleteRoom);
+router.get('/', chattingController.readRoomList);
 
 module.exports = router;
