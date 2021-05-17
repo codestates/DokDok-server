@@ -40,13 +40,14 @@ const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 const commentRouter = require('./routes/comment');
 const chattingRouter = require('./routes/chatting');
+const roomsRouter = require('./routes/rooms');
 const inquireRouter = require('./routes/inquire');
 const interestRouter = require('./routes/interest');
 
 app.use('/users', userRouter);
 app.use('/posts', postRouter);
 app.use('/comments', commentRouter);
-app.use('/rooms', chattingRouter);
+app.use('/rooms', roomsRouter);
 app.use('/chattings', chattingRouter);
 app.use('/inquires', inquireRouter);
 app.use('/interests', interestRouter);
