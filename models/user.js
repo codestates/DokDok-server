@@ -20,6 +20,9 @@ module.exports = class User extends Model {
           type: DataTypes.STRING(30),
           allowNull: false,
         },
+        profile_image: {
+          type: DataTypes.BLOB,
+        },
         delflag: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
