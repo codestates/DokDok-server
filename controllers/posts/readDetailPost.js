@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
                 id: id
              } 
           });
-          return res.status(200).json({ "message": "게시글 상세 페이지 가져오기 성공!" })
+        return res.status(200).json({ "message": "게시글 상세 페이지 가져오기 성공!" })
     }catch(err){
-        return res.send();
+        return res.status(401).json({ "message": "실패" });
     }
 };

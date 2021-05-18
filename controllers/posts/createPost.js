@@ -1,10 +1,8 @@
 const { Post } = require("../../models");
 module.exports = async (req, res) => {
-    // 헤더에 인증정보
     const { title, content, nickname, type, address, road_address, image1, image2, image3, image4, image5} = req.body;
     console.log(req.body);
-    // const token = req.headers.authorization.split(" ")[1];
-    // const decoded = jwt.verify(token, process.env.ACCESS_SECRET); 
+    // console.log(req.user);
 
     try{
         await Post.findOrCreate({
@@ -36,8 +34,10 @@ module.exports = async (req, res) => {
             }
         })
         return res.status(200).json({ "message": "게시글 생성 성공!" })
-        // "post":{ "id": id, "title": title, "content": content,},
+        // "post":{ "id": id, "title": title, "content": content},
     }catch(err){
-        return res.status(401).json({ "message": "액세스 토큰이 만료되었습니다." })
+        if(!req.user){
+            return res.status(401).json({  "message": "액세스 토큰이 만료되었습니다."  })
+        }
     }
 };
