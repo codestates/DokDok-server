@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res, next) => {
   const authorization = req.headers.authorization || req.cookies.authorization;
-
   if (!authorization) {
     return res.status(401).send({ mesaage: 'Auth error' });
   }
