@@ -7,6 +7,7 @@ require('dotenv').config();
 
 module.exports = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const userInfo = await User.findOne({
       where: {
@@ -34,7 +35,6 @@ module.exports = async (req, res) => {
     };
 
     const accessToken = generateAccessToken(payload);
-
     res.cookie('authorization', `Bearer ${accessToken}`, {
       domain: process.env.DOMAIN,
       path: '/',
