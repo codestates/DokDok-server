@@ -4,8 +4,9 @@ const { Post } = require("../../models");
 module.exports = async (req, res) => {
     const { id, title, content, type, state, address, road_address, image1, image2, image3, image4, image5 } = req.body;
     console.log(req.body);
-    // console.log(req.user);
-
+    console.log(req.user.id);
+    
+    if(req.user === id){
     try{
         await Post.update({
             title: title,
@@ -29,4 +30,7 @@ module.exports = async (req, res) => {
             return res.status(401).json({ "message": "액세스 토큰이 만료되었습니다." })
         }
     }
+} else {
+    return res.status(403).json({ "message": "수정할 권한이 없습니다." })
+}
 };
