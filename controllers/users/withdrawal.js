@@ -16,11 +16,8 @@ module.exports = async (req, res) => {
       );
 
       if (withdrawalUser) {
-        if (req.headers.authorization) {
-          delete req.headers.authorization;
-          res.clearCookie('authorization');
-        } else {
-          res.clearCookie('authorization');
+        if (req.headers.Authorization) {
+          res.clearCookie('Authorization');
         }
         res.status(201).send({ message: 'withdrawal success' });
       }

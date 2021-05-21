@@ -21,7 +21,7 @@ module.exports = class User extends Model {
           allowNull: false,
         },
         profile_image: {
-          type: DataTypes.BLOB,
+          type: DataTypes.STRING(300),
         },
         delflag: {
           type: DataTypes.BOOLEAN,
