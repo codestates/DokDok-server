@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
 
     const accessToken = generateAccessToken(payload);
 
-    res.cookie('authorization', `Bearer ${accessToken}`, {
+    res.cookie('Authorization', `Bearer ${accessToken}`, {
       domain: process.env.DOMAIN,
       path: '/',
       maxAge: 24 * 6 * 60 * 1000,

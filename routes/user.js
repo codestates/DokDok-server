@@ -9,8 +9,8 @@ router.post('/signup', userController.signup);
 router.get('/', jwtMiddleware, userController.userinfo);
 router.patch('/', jwtMiddleware, userController.updateUserinfo);
 router.patch('/withdrawal', jwtMiddleware, userController.withdrawal);
-router.post('/google', userController.googleLogin);
-router.post('/kakao', userController.kakaoLogin);
-router.post('/naver', userController.naverLogin);
+router.get('/google/callback', userController.googleLogin);
+router.get('/kakao/callback', userController.kakaoLogin);
+router.get('/naver/callback', userController.naverLogin);
 
 module.exports = router;

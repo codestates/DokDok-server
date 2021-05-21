@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res, next) => {
-  const authorization = req.headers.authorization || req.cookies.authorization;
+  const authorization = req.headers.Authorization || req.cookies.Authorization;
 
   if (!authorization) {
     return res.status(401).send({ mesaage: 'Auth error' });

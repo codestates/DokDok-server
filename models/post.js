@@ -38,19 +38,19 @@ module.exports = class Post extends Model {
           type: DataTypes.STRING(200),
         },
         image1: {
-          type: DataTypes.BLOB,
+          type: DataTypes.STRING(300),
         },
         image2: {
-          type: DataTypes.BLOB,
+          type: DataTypes.STRING(300),
         },
         image3: {
-          type: DataTypes.BLOB,
+          type: DataTypes.STRING(300),
         },
         image4: {
-          type: DataTypes.BLOB,
+          type: DataTypes.STRING(300),
         },
         image5: {
-          type: DataTypes.BLOB,
+          type: DataTypes.STRING(300),
         },
       },
       {
