@@ -21,6 +21,6 @@ module.exports = async (req, res) => {
         //     id: postInfo.id,
         //      "message": "게시글 상세 페이지 가져오기 성공!" })
     }catch(err){
-        return res.status(401).json({ "message": "실패" });
+        return res.status(401).json({ message: "실패" });
     }
 };

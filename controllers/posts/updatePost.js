@@ -23,11 +23,11 @@ module.exports = async (req, res) => {
         }, {
             where: { id: id }
         })
-        return res.status(200).json({ "message": "Update post Success!" })
+        return res.status(200).json({ message: "Update post Success!" })
         // "post":{ "id": id, "title": title, "content": content},
     }catch(err){
         if(!req.user){
-            return res.status(401).json({ "message": "액세스 토큰이 만료되었습니다." })
+            return res.status(401).json({ message: "액세스 토큰이 만료되었습니다." })
         }
     }
 } else {
