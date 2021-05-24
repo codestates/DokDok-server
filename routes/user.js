@@ -1,13 +1,14 @@
 const express = require('express');
 const userController = require('../controllers/users');
 const router = express.Router();
+const { upload } = require('../config/s3');
 const jwtMiddleware = require('../middleware/jwtToken');
 
 router.post('/login', userController.login);
 router.post('/logout', jwtMiddleware, userController.logout);
 router.post('/signup', userController.signup);
 router.get('/', jwtMiddleware, userController.userinfo);
-router.patch('/', jwtMiddleware, userController.updateUserinfo);
+router.patch('/', upload.single('profileImage'), jwtMiddleware, userController.updateUserinfo);
 router.patch('/withdrawal', jwtMiddleware, userController.withdrawal);
 
 router.get('/google/login', userController.googleLogin);
