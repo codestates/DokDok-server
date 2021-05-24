@@ -1,13 +1,17 @@
-const { Post } = require("../../models");
+const { Post, User } = require("../../models");
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
 module.exports = async (req, res) => {
-    const { title, nickname, address } = req.query;
+    const { title, address } = req.query;
     console.log(req.query.title);
 
         try{
             await Post.findAll({
+                include: [{
+                    model: User,
+                    attributes:['nickname'],
+                }],
                 where:{ 
                   [Op.or]:[
                     {
@@ -15,11 +19,11 @@ module.exports = async (req, res) => {
                             [Op.like]: '%' + title + '%'
                         },
                     },
-                    {
-                        nickname:{
-                            [Op.like]: '%' + nickname + '%'
-                        },
-                    },
+                    // {
+                    //     nickname:{
+                    //         [Op.like]: '%' + nickname + '%'
+                    //     },
+                    // },
                     {
                         address: {
                             [Op.like]: '%' + address + '%'
@@ -36,12 +40,6 @@ module.exports = async (req, res) => {
                     message: "게시글 검색 성공!"
                 });
             })
-            // return res.status(200).json({ 
-            //     title: title,
-            //     nickname: nickname,
-            //     address: address,
-            //     "message": "게시글 검색 성공!"
-            // })
         }catch(err){
             console.log('====');
             console.error(err);

@@ -2,10 +2,15 @@ const axios = require('axios');
 const { User } = require('../../models');
 const { generateAccessToken } = require('../../utils/userFunc');
 
-module.exports = async (req, res) => {
+const kakaoLogin = (req, res) => {
   // 로그인 버튼
   // https://kauth.kakao.com/oauth/authorize?client_id=da648601d0e0a69540e05282cb994f18&redirect_uri=http://localhost:4000/users/kakao/callback&response_type=code
+  res.redirect(
+    `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&&response_type=code`,
+  );
+};
 
+const kakaoCallback = async (req, res) => {
   const code = req.query.code;
   try {
     const result = await axios.post(
@@ -51,7 +56,7 @@ module.exports = async (req, res) => {
       maxAge: 24 * 6 * 60 * 1000,
       sameSite: 'none',
       httpOnly: true,
-      // secure: true, // https
+      secure: false, // https
     });
 
     res.status(200).send({
@@ -59,8 +64,18 @@ module.exports = async (req, res) => {
       user: payload,
       message: 'login success',
     });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: '서버에러' });
+  }
+};
 
-    /*
+module.exports = {
+  kakaoLogin,
+  kakaoCallback,
+};
+
+/*
             프사가 없으면 is_default_image : true
             userInfo.data
             userInfo.data.kakao_account.profile.nickname
@@ -73,8 +88,3 @@ module.exports = async (req, res) => {
             thumbnail_image_url: 'http://k.kakaocdn.net/dn/zL8IK/btq5hZaEJ4i/DM7npqNkMi4Txohs2l5k31/img_110x110.jpg',
             profile_image_url: 'http://k.kakaocdn.net/dn/zL8IK/btq5hZaEJ4i/DM7npqNkMi4Txohs2l5k31/img_640x640.jpg',
       */
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ message: '서버에러' });
-  }
-};

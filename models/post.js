@@ -13,10 +13,6 @@ module.exports = class Post extends Model {
           type: DataTypes.TEXT,
           allowNull: false,
         },
-        nickname: {
-          type: DataTypes.STRING(30),
-          allowNull: false,
-        },
         interest_cnt: {
           type: DataTypes.INTEGER.UNSIGNED,
           allowNull: false,

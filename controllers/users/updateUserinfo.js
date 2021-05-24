@@ -4,6 +4,8 @@ const { hashPassword, generateAccessToken } = require('../../utils/userFunc');
 
 module.exports = async (req, res) => {
   const { nickname, password, profileImage } = req.body;
+  console.log(req.file);
+  console.log(nickname, password, profileImage);
 
   if (!nickname && !password && !profileImage) {
     return res.status(400).end();
@@ -25,8 +27,9 @@ module.exports = async (req, res) => {
       userInfo.password = hashPassword(password);
     }
 
-    if (profileImage) {
-      userInfo.profile_image = profileImage;
+    if (req.file.location) {
+      userInfo.profile_image = req.file.location;
+      console.log('asdfasdf');
     }
 
     await userInfo.save();
@@ -47,8 +50,9 @@ module.exports = async (req, res) => {
       maxAge: 24 * 6 * 60 * 1000,
       sameSite: 'none',
       httpOnly: true,
-      // secure: true, // https
+      secure: false, // https
     });
+    console.log(userInfo.profile_image);
     return res.status(200).send({
       accessToken,
       user: payload,

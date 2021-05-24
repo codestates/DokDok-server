@@ -20,6 +20,7 @@ const storage = multerS3({ //multerS3 설정 항목
   key: function (req, file, cb) {  
     cb(null, Date.now().toString() + file.originalname.split('.').pop());
   }, 
+  limit: { fileSize: 5 * 1024 * 1024},
 }) 
 
 exports.upload = multer({ storage: storage });
