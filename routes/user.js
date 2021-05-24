@@ -15,6 +15,7 @@ router.get('/google/login', userController.googleLogin);
 router.get('/google/callback', userController.googleCallback);
 router.get('/kakao/login', userController.kakaoLogin);
 router.get('/kakao/callback', userController.kakaoCallback);
+router.get('/kakao/userinfo', userController.kakaoUserinfo);
 router.get('/naver/login', userController.naverLogin);
 router.get('/naver/callback', userController.naverCallback);
 

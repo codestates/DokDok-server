@@ -2,12 +2,16 @@ const axios = require('axios');
 const { User } = require('../../models');
 const { generateAccessToken } = require('../../utils/userFunc');
 
-const kakaoLogin = (req, res) => {
+const kakaoLogin = async (req, res) => {
+  console.log('ddddd');
   // 로그인 버튼
   // https://kauth.kakao.com/oauth/authorize?client_id=da648601d0e0a69540e05282cb994f18&redirect_uri=http://localhost:4000/users/kakao/callback&response_type=code
   res.redirect(
     `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&&response_type=code`,
   );
+  // const result = await axios.get(
+  //   `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&&response_type=code`,
+  // );
 };
 
 const kakaoCallback = async (req, res) => {
@@ -39,7 +43,6 @@ const kakaoCallback = async (req, res) => {
       },
     });
 
-    console.log(user);
     const payload = {
       id: user.id,
       email: user.email,
@@ -56,9 +59,12 @@ const kakaoCallback = async (req, res) => {
       maxAge: 24 * 6 * 60 * 1000,
       sameSite: 'none',
       httpOnly: true,
-      secure: false, // https
+      secure: true, // https
     });
 
+    // res.redirect(
+    //   `http://localhost:3000/main?access_token=${accessToken}&kakao`,
+    // );
     res.status(200).send({
       accessToken: accessToken,
       user: payload,
@@ -66,13 +72,19 @@ const kakaoCallback = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: '서버에러' });
+    return res.status(500).send({ message: '서버에러' });
   }
+};
+
+const kakaoUserinfo = (req, res) => {
+  console.log(req.user);
+  res.status(200).send(req.user);
 };
 
 module.exports = {
   kakaoLogin,
   kakaoCallback,
+  kakaoUserinfo,
 };
 
 /*

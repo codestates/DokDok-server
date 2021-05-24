@@ -6,6 +6,7 @@ exports.updateUserinfo = require('./updateUserinfo');
 exports.withdrawal = require('./withdrawal');
 exports.kakaoLogin = require('./kakaoLogin').kakaoLogin;
 exports.kakaoCallback = require('./kakaoLogin').kakaoCallback;
+exports.kakaoUserinfo = require('./kakaoLogin').kakaoUserinfo;
 exports.naverLogin = require('./naverLogin').naverLogin;
 exports.naverCallback = require('./naverLogin').naverCallback;
 exports.googleLogin = require('./googleLogin').googleLogin;

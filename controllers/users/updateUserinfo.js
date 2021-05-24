@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
       maxAge: 24 * 6 * 60 * 1000,
       sameSite: 'none',
       httpOnly: true,
-      secure: false, // https
+      secure: true, // https
     });
     console.log(userInfo.profile_image);
     return res.status(200).send({
