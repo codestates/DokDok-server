@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
       maxAge: 24 * 6 * 60 * 1000,
       sameSite: 'none',
       httpOnly: true,
-      // secure: true, // https
+      secure: false, // https
     });
     return res.status(200).send({
       accessToken,

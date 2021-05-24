@@ -2,14 +2,17 @@ const axios = require('axios');
 const { User } = require('../../models');
 const { generateAccessToken } = require('../../utils/userFunc');
 
-module.exports = async (req, res) => {
+const naverLogin = (req, res) => {
   /*
-   * 로그인 버튼
-   * https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=Geic3o3F4WAETCidA5Yx&state=STATE_STRING&redirect_uri=http://localhost:4000/users/naver/callback
-   *
-   *
+    로그인 버튼
+    https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=Geic3o3F4WAETCidA5Yx&state=STATE_STRING&redirect_uri=http://localhost:4000/users/naver/callback
    */
+  res.redirect(
+    `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.NAVER_CLIENT_ID}&state=STATE_STRING&redirect_uri=${process.env.NAVER_REDIRECT_URI}`,
+  );
+};
 
+const naverCallback = async (req, res) => {
   const code = req.query.code;
   const state = req.query.state;
 
@@ -55,7 +58,7 @@ module.exports = async (req, res) => {
       maxAge: 24 * 6 * 60 * 1000,
       sameSite: 'none',
       httpOnly: true,
-      // secure: true, // https
+      secure: false, // https
     });
 
     res.status(200).send({
@@ -67,8 +70,14 @@ module.exports = async (req, res) => {
     console.error(error);
     res.status(500).send({ message: '서버에러' });
   }
+};
 
-  /*
+module.exports = {
+  naverLogin,
+  naverCallback,
+};
+
+/*
   userInfo.data.response;
     data: {
         resultcode: '00',
@@ -82,4 +91,3 @@ module.exports = async (req, res) => {
             }
     }
   */
-};
