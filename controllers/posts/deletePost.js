@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
     console.log(req.body);
     console.log(req.user);
 
-    if(req.user === id){
+    if(req.user){
         try{
             const postInfo = await Post.findOne({
                 where:{ id: id }

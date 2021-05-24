@@ -1,9 +1,10 @@
 const express = require('express');
 const postController = require('../controllers/posts');
 const router = express.Router();
+const { upload } = require('../config/s3');
 const jwtMiddleware = require('../middleware/jwtToken');
 
-router.post('/', jwtMiddleware, postController.createPost);
+router.post('/', upload.array('image', 5), jwtMiddleware, postController.createPost);
 router.patch('/', jwtMiddleware, postController.updatePost);
 router.delete('/', jwtMiddleware, postController.deletePost);
 router.get('/', postController.readPostList);
