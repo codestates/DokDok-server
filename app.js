@@ -38,7 +38,7 @@ app.use(
       path: '/',
       sameSite: 'none',
       httpOnly: true,
-      secure: true,
+      secure: false,
     },
   }),
 );

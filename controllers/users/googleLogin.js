@@ -2,7 +2,18 @@ const axios = require('axios');
 const { User } = require('../../models');
 const { generateAccessToken } = require('../../utils/userFunc');
 
-module.exports = async (req, res) => {
+const googleLogin = (req, res) => {
+  /*
+
+    로그인 버튼 
+    https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=http://localhost:4000/users/google/callback&client_id=51151797715-vch07d409dgip3h7md7qvl9m5rqmor2j.apps.googleusercontent.com
+*/
+  res.redirect(
+    `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&client_id=${process.env.GOOGLE_CLIENT_ID}`,
+  );
+};
+
+const googleCallback = async (req, res) => {
   console.log(req.query.code);
   const code = req.query.code;
 
@@ -51,7 +62,7 @@ module.exports = async (req, res) => {
       maxAge: 24 * 6 * 60 * 1000,
       sameSite: 'none',
       httpOnly: true,
-      // secure: true, // https
+      secure: false, // https
     });
 
     res.status(200).send({
@@ -59,20 +70,19 @@ module.exports = async (req, res) => {
       user: payload,
       message: 'login success',
     });
-
-    /*
-        userInfo.data.email = 'chotg5592@gmail.com',
-        userInfo.data.name = '조태규
-        userInfo.data.picture: 'https://lh3.googleusercontent.com/a/AATXAJwzy80606BpCX-IxeQOl13ZEVClutq-ywChdTp-=s96-c'
-      */
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: '서버에러' });
   }
 };
 
-/*
+module.exports = {
+  googleLogin,
+  googleCallback,
+};
 
-    로그인 버튼 
-    https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=http://localhost:4000/users/google/callback&client_id=51151797715-vch07d409dgip3h7md7qvl9m5rqmor2j.apps.googleusercontent.com
-*/
+/*
+        userInfo.data.email = 'chotg5592@gmail.com',
+        userInfo.data.name = '조태규
+        userInfo.data.picture: 'https://lh3.googleusercontent.com/a/AATXAJwzy80606BpCX-IxeQOl13ZEVClutq-ywChdTp-=s96-c'
+      */
