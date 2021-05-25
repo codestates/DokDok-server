@@ -8,7 +8,7 @@ const googleLogin = (req, res) => {
     로그인 버튼 
     https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=http://localhost:4000/users/google/callback&client_id=51151797715-vch07d409dgip3h7md7qvl9m5rqmor2j.apps.googleusercontent.com
 */
-  res.redirect(
+  return res.redirect(
     `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/userinfo.profile&access_type=offline&response_type=code&state=state_parameter_passthrough_value&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}&client_id=${process.env.GOOGLE_CLIENT_ID}`,
   );
 };
@@ -65,11 +65,12 @@ const googleCallback = async (req, res) => {
       secure: false, // https
     });
 
-    res.status(200).send({
-      accessToken: accessToken,
-      user: payload,
-      message: 'login success',
-    });
+    res.redirect(`http://localhost:3000/main?access_token=${accessToken}`);
+    // res.status(200).send({
+    //   accessToken: accessToken,
+    //   user: payload,
+    //   message: 'login success',
+    // });
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: '서버에러' });

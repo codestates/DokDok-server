@@ -28,7 +28,6 @@ module.exports = async (req, res) => {
       return res.status(400).send({ message: '존재하지 않는 회원입니다.' });
     }
   } catch (error) {
-    console.log('====');
     console.error(error);
     res.status(500).send('서버에러');
   }
