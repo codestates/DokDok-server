@@ -1,4 +1,4 @@
-const { Comment } = require("../../models");
+const { Comment, User } = require("../../models");
 
 module.exports = async (req, res) => {
     // 헤더 인증이 오면 user_id로 가져오는 형식(?)
@@ -6,7 +6,13 @@ module.exports = async (req, res) => {
     console.log(req.params);
     try{
         // let sql = `SELECT id, comment, created_at AS createdAt, updated_at AS updatedAt, user_id AS UserId, post_id AS PostId FROM comments AS Comment WHERE Comment.post_id =?;`
-        await Comment.findOne({ 
+        await Comment.findAll({ 
+            include:[
+                {
+                    model: User,
+                    attributes: ['nickname']
+                }
+            ],
             where: {
                 PostId: id
              } 

@@ -1,23 +1,26 @@
-const { sequelize } = require("../../models");
+const { Post, User } = require("../../models");
 
 module.exports = async (req, res) => {
-console.log(req.user);
-    if(req.user){
+    
         try{
-            let sql = `select * from posts;`
-
-            await sequelize.query(sql)
-            .then(data => {
+            await Post.findAll({
+                include:[
+                    {
+                        model: User,
+                        attributes: ['nickname']
+                    }
+                ],
+            })
+            .then(result => {
                 console.log("성공!!!");
-                res.json({
-                    data,
-                    message: "게시 목록 가져오기 성공!"
+                return res.json({
+                    result,
+                    message: "게시글 검색 성공!"
                 });
             })
         }catch(err){
-            return res.send({ message: "실패"})
+            console.log('====');
+            console.error(err);
+            res.status(500).send('서버에러');
         }
-    } else {
-        return res.status(401).json({ message: "액세스 토큰이 만료되었습니다." })
-    }
 };

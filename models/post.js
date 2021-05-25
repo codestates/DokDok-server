@@ -27,11 +27,16 @@ module.exports = class Post extends Model {
           allowNull: false,
           defaultValue: 'exchange',
         },
-        address: {
-          type: DataTypes.STRING(200),
+        address:{
+          type: DataTypes.STRING(30),
         },
-        road_address: {
-          type: DataTypes.STRING(200),
+        latitude: {
+          type: DataTypes.DOUBLE,
+          allowNull: false,
+        },
+        longitude: {
+          type: DataTypes.DOUBLE,
+          allowNull: false,
         },
         image1: {
           type: DataTypes.STRING(300),

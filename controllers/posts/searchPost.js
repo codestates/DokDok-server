@@ -3,10 +3,22 @@ const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
 module.exports = async (req, res) => {
-    const { title, address } = req.query;
+    const { title, address, nickname } = req.query;
     console.log(req.query.title);
 
+    
         try{
+            let userInfo;
+            
+            if(nickname){
+                userInfo = await User.findOne({
+                    where:{
+                        nickname: nickname
+                    },
+                })
+                console.log(userInfo);
+            }
+            
             await Post.findAll({
                 include: [{
                     model: User,
@@ -19,11 +31,9 @@ module.exports = async (req, res) => {
                             [Op.like]: '%' + title + '%'
                         },
                     },
-                    // {
-                    //     nickname:{
-                    //         [Op.like]: '%' + nickname + '%'
-                    //     },
-                    // },
+                    {
+                        UserId: userInfo.id,
+                    },
                     {
                         address: {
                             [Op.like]: '%' + address + '%'

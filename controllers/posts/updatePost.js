@@ -34,6 +34,7 @@ module.exports = async (req, res) => {
             state: state,
             address: address,
             road_address: road_address,
+            UserId: req.user.id,
             image1: path[0] || null,
             image2: path[1] || null,
             image3: path[2] || null,
