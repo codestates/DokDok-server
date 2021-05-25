@@ -1,14 +1,25 @@
-const { Comment } = require("../../models");
+const { Comment, User } = require("../../models");
 
 module.exports = async (req, res) => {
     const { id } = req.params;
     const { comment } = req.body;
-    console.log(req.params.id);
-    console.log(req.body);
+    // console.log(req.params.id);
+    // console.log(req.body);
     console.log(req.user.id);
 
     try{
         // let sql = `INSERT INTO comments (comment,created_at,updated_at, user_id, post_id) VALUES ('댓글',now(),now(),1, 1);`
+        const userInfo = await User.findOne({
+            where:{
+                id: req.user.id,
+            },
+            attributes:[
+                'nickname'
+            ]
+        })
+        const payload = {
+            nickname: userInfo.nickname
+        }
         await Comment.create({          
                 comment: comment,    // 댓글 내용
                 PostId: id,          // 유저 고유 아이디 값
@@ -18,6 +29,7 @@ module.exports = async (req, res) => {
             console.log("성공!!!");
             res.status(200).json({
                 data,
+                User: payload,
                 message: "create comment success"
             });
         })
