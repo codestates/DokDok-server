@@ -2,11 +2,14 @@ const { Post } = require("../../models");
 
 
 module.exports = async (req, res) => {
-    const { id, title, content, type, state, address, road_address, image1, image2, image3, image4, image5 } = req.body;
-    console.log(req.body);
-    console.log(req.user.id);
+    const { id, title, content, type, state, address, road_address } = req.body;
+    const image = req.files;
+    const path = image.map(img => img.location);
+
+    // console.log(req.body);
+    // console.log(req.user.id);
     
-    if(req.user === id){
+    if(req.user){
     try{
         await Post.update({
             title: title,
@@ -15,16 +18,33 @@ module.exports = async (req, res) => {
             state: state,
             address: address,
             road_address: road_address,
-            image1: image1,
-            image2: image2,
-            image3: image3,
-            image4: image4,
-            image5: image5
+            image1: path[0] || null,
+            image2: path[1] || null,
+            image3: path[2] || null,
+            image4: path[3] || null,
+            image5: path[4] || null
         }, {
             where: { id: id }
         })
-        return res.status(200).json({ message: "Update post Success!" })
-        // "post":{ "id": id, "title": title, "content": content},
+        const payload = {
+            id: id,
+            title: title,
+            content: content,
+            type: type,
+            state: state,
+            address: address,
+            road_address: road_address,
+            UserId: req.user.id,
+            image1: path[0] || null,
+            image2: path[1] || null,
+            image3: path[2] || null,
+            image4: path[3] || null,
+            image5: path[4] || null
+        }
+        return res.status(200).json({
+            post: payload,
+            message: "Update post Success!"
+        });
     }catch(err){
         if(!req.user){
             return res.status(401).json({ message: "액세스 토큰이 만료되었습니다." })
