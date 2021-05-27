@@ -3,9 +3,12 @@ const { Post } = require("../../models");
 
 module.exports = async (req, res) => {
     const { id } = req.params;
-    const { title, content, type, state, address, latitude, longitude } = req.body;
+    const { title, content, type, state, address, latitude, longitude, prevImage } = req.body;
     const image = req.files;
-    const path = image.map(img => img.location);
+    // const path = image.map(img => img.location);
+    const path = Array.isArray(prevImage)
+    ? [...prevImage, ...image.map((img) => img.location)]
+    : [prevImage, ...image.map((img) => img.location)];
 
     // console.log(req.params);
     // console.log(req.body);
