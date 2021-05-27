@@ -1,12 +1,13 @@
-const { Post, User } = require("../../models");
+const { Post, User } = require('../../models');
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
 
 module.exports = async (req, res) => {
-    const { title, address, nickname } = req.query;
-    console.log(req.query.title);
+  const { title, address, nickname } = req.query;
+  console.log(req.query.title);
+  console.log(req.query.address);
+  console.log(req.query.nickname);
 
-    
         try{
             let userInfo = {
                 id: -1,
