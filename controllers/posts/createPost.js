@@ -23,10 +23,6 @@ module.exports = async (req, res) => {
                 'nickname', 'profile_image'
             ]
         }) 
-        const payload = {
-            nickname: userInfo.nickname,
-            profileImage: userInfo.profile_image,
-        }
 
         await Post.create({
                 UserId: req.user.id,

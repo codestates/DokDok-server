@@ -2,10 +2,12 @@ const { Post } = require("../../models");
 
 
 module.exports = async (req, res) => {
-    const { id, title, content, type, state, address, road_address } = req.body;
+    const { id } = req.params;
+    const { title, content, type, state, address, latitude, longitude } = req.body;
     const image = req.files;
     const path = image.map(img => img.location);
 
+    // console.log(req.params);
     // console.log(req.body);
     // console.log(req.user.id);
     
@@ -17,7 +19,8 @@ module.exports = async (req, res) => {
             type: type,
             state: state,
             address: address,
-            road_address: road_address,
+            latitude: latitude,
+            longitude: longitude,
             image1: path[0] || null,
             image2: path[1] || null,
             image3: path[2] || null,
@@ -27,13 +30,13 @@ module.exports = async (req, res) => {
             where: { id: id }
         })
         const payload = {
-            id: id,
             title: title,
             content: content,
             type: type,
             state: state,
             address: address,
-            road_address: road_address,
+            latitude: latitude,
+            longitude: longitude,
             UserId: req.user.id,
             image1: path[0] || null,
             image2: path[1] || null,

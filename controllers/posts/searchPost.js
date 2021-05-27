@@ -8,16 +8,22 @@ module.exports = async (req, res) => {
 
     
         try{
-            let userInfo;
-            
-            if(nickname){
+            let userInfo = {
+                id: -1,
+              };
+              if (nickname) {
                 userInfo = await User.findOne({
-                    where:{
-                        nickname: nickname
-                    },
-                })
+                  where: {
+                    nickname: nickname,
+                  },
+                });
+                if (!userInfo) {
+                  userInfo = {
+                    id: -1,
+                  };
+                }
                 console.log(userInfo);
-            }
+              }
             
             await Post.findAll({
                 include: [{
