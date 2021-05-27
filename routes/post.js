@@ -5,7 +5,7 @@ const { upload } = require('../config/s3');
 const jwtMiddleware = require('../middleware/jwtToken');
 
 router.post('/', upload.array('image', 5), jwtMiddleware, postController.createPost);
-router.patch('/', upload.array('image', 5), jwtMiddleware, postController.updatePost);
+router.patch('/:id', upload.array('image', 5), jwtMiddleware, postController.updatePost);
 router.delete('/', jwtMiddleware, postController.deletePost);
 router.get('/', postController.readPostList);
 router.get('/search', postController.searchPost);

@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -6,8 +7,6 @@ const morgan = require('morgan');
 const db = require('./models');
 require('dotenv').config();
 const axios = require('axios');
-
-const app = express();
 
 db.sequelize
   .sync()
