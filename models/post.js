@@ -27,7 +27,7 @@ module.exports = class Post extends Model {
           allowNull: false,
           defaultValue: 'exchange',
         },
-        address:{
+        address: {
           type: DataTypes.STRING(30),
         },
         latitude: {
