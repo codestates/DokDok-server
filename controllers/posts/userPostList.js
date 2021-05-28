@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
                         attributes: ['nickname']
                     }
                 ],
+                where: { UserId: req.user.id }
             })
             .then(result => {
                 console.log("성공!!!");
