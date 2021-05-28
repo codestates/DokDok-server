@@ -11,7 +11,14 @@ module.exports = async (req, res, next) => {
   }
 
   const token = authorization.split(' ')[1];
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    console.error(error);
+    if (error.name === 'TokenExpiredError') {
+      return res.status(401).send({ mesaage: error });
+    }
+  }
 
   if (!decoded) {
     return res.status(401).send({ message: 'Auth error' });
