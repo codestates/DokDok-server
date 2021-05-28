@@ -6,17 +6,11 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const db = require('./models');
-require('dotenv').config();
-const axios = require('axios');
-const server = http.createServer(app);
 
-const socketIO = require('socket.io');
-
-const io = socketIO(server);
-
-io.on("connection", (socket) => {
-  console.log("연결이 이루어 졌습니다.");
-})
+// require('dotenv').config();
+// const http = require('http');
+// const SocketIo = require('socket.io');
+// const socketEvents = require('./config/socket');
 
 
 db.sequelize
@@ -48,7 +42,7 @@ app.use(
       path: '/',
       sameSite: 'none',
       httpOnly: true,
-      secure: false,
+      secure: true,
     },
   }),
 );
@@ -73,6 +67,20 @@ app.use('/chattings', chattingRouter);
 app.use('/inquires', inquireRouter);
 app.use('/interests', interestRouter);
 
-server.listen(process.env.PORT, () => {
-  console.log(`${process.env.PORT} 서버 실행`);
-});
+
+// const server = http.createServer(app);
+
+// server.listen(process.env.PORT, () => {
+//   console.log(`${process.env.PORT} 서버 실행`);
+// });
+
+// const io = SocketIo(server, {
+//   cors: {
+//     origin: process.env.ORIGIN,
+//     credentials: true,
+//   },
+// });
+// socketEvents(io);
+
+module.exports = app;
+

@@ -62,7 +62,7 @@ const googleCallback = async (req, res) => {
       maxAge: 24 * 6 * 60 * 1000,
       sameSite: 'none',
       httpOnly: true,
-      secure: false, // https
+      secure: true, // https
     });
 
     res.redirect(`http://localhost:3000/main?access_token=${accessToken}`);

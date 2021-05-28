@@ -27,9 +27,8 @@ module.exports = async (req, res) => {
       userInfo.password = hashPassword(password);
     }
 
-    if (req.file.location) {
+    if (req.file) {
       userInfo.profile_image = req.file.location;
-      console.log('asdfasdf');
     }
 
     await userInfo.save();
