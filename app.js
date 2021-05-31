@@ -1,17 +1,12 @@
 const express = require('express');
-const http = require('http');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const db = require('./models');
-
-// require('dotenv').config();
-// const http = require('http');
-// const SocketIo = require('socket.io');
-// const socketEvents = require('./config/socket');
-
+require('dotenv').config();
+const axios = require('axios');
 
 db.sequelize
   .sync()
@@ -67,20 +62,6 @@ app.use('/chattings', chattingRouter);
 app.use('/inquires', inquireRouter);
 app.use('/interests', interestRouter);
 
-
-// const server = http.createServer(app);
-
-// server.listen(process.env.PORT, () => {
-//   console.log(`${process.env.PORT} 서버 실행`);
-// });
-
-// const io = SocketIo(server, {
-//   cors: {
-//     origin: process.env.ORIGIN,
-//     credentials: true,
-//   },
-// });
-// socketEvents(io);
-
-module.exports = app;
-
+app.listen(process.env.PORT, () => {
+  console.log(`${process.env.PORT} 서버 실행`);
+});
