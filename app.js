@@ -1,5 +1,4 @@
 const express = require('express');
-const http = require('http');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -8,16 +7,6 @@ const morgan = require('morgan');
 const db = require('./models');
 require('dotenv').config();
 const axios = require('axios');
-const server = http.createServer(app);
-
-const socketIO = require('socket.io');
-
-const io = socketIO(server);
-
-io.on("connection", (socket) => {
-  console.log("연결이 이루어 졌습니다.");
-})
-
 
 db.sequelize
   .sync()
@@ -73,6 +62,6 @@ app.use('/chattings', chattingRouter);
 app.use('/inquires', inquireRouter);
 app.use('/interests', interestRouter);
 
-server.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log(`${process.env.PORT} 서버 실행`);
 });

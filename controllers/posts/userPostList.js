@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
                 include:[
                     {
                         model: User,
-                        attributes: ['nickname']
+                        attributes: ['nickname', 'profile_image']
                     }
                 ],
                 where: { UserId: req.user.id }
