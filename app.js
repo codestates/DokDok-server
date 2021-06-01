@@ -6,6 +6,7 @@ const session = require('express-session');
 const morgan = require('morgan');
 const db = require('./models');
 
+
 db.sequelize
   .sync()
   .then(() => {
@@ -60,4 +61,6 @@ app.use('/chattings', chattingRouter);
 app.use('/inquires', inquireRouter);
 app.use('/interests', interestRouter);
 
+
 module.exports = app;
+
