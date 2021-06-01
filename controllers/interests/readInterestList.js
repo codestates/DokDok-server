@@ -17,7 +17,25 @@ module.exports = async (req, res) => {
     // console.log(user[0].dataValues.Posts[0]);
     // console.log(user[0].dataValues.Posts[1]);
     console.log(user.Posts);
-    res.status(200).send(user.Posts);
+
+    const postList = [];
+    for (let i = 0; i < user.Posts.length; i++) {
+      const id = user.Posts[i].id;
+      const postInfo = await Post.findOne({
+        where: {
+          id,
+        },
+        include: [
+          {
+            model: User,
+            attributes: ['nickname', 'profile_image'],
+          },
+        ],
+      });
+      postList.push(postInfo);
+    }
+
+    res.status(200).send(postList);
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: '서버에러' });

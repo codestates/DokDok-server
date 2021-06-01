@@ -10,7 +10,7 @@ module.exports = class Chatting extends Model {
           allowNull: false,
         },
         image: {
-          type: DataTypes.BLOB,
+          type: DataTypes.STRING(300),
         },
         created_at: {
           type: DataTypes.DATE,
