@@ -5,8 +5,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const db = require('./models');
-require('dotenv').config();
-const axios = require('axios');
+
 
 db.sequelize
   .sync()
@@ -62,6 +61,6 @@ app.use('/chattings', chattingRouter);
 app.use('/inquires', inquireRouter);
 app.use('/interests', interestRouter);
 
-app.listen(process.env.PORT, () => {
-  console.log(`${process.env.PORT} 서버 실행`);
-});
+
+module.exports = app;
+

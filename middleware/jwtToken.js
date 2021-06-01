@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res, next) => {
   const authorization = req.headers.authorization || req.cookies.Authorization;
-  console.log(req.headers.authorization);
-  console.log(req.cookies.Authorization);
+  // console.log(req.headers.authorization);
+  // console.log(req.cookies.Authorization);
 
   if (!authorization) {
     return res.status(401).send({ mesaage: 'Auth error' });
@@ -21,6 +21,7 @@ module.exports = async (req, res, next) => {
   } catch (error) {
     console.error(error);
     if (error.name === 'TokenExpiredError') {
+      console.error(error);
       return res.status(401).send({ error });
     }
   }

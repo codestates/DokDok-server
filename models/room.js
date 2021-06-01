@@ -5,10 +5,6 @@ module.exports = class Room extends Model {
   static init(sequelize) {
     return super.init(
       {
-        room_name: {
-          type: DataTypes.STRING(30),
-          allowNull: false,
-        },
         delflag: {
           type: DataTypes.BOOLEAN,
           defaultValue: 1,
