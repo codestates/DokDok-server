@@ -61,7 +61,7 @@ const naverCallback = async (req, res) => {
       secure: true, // https
     });
 
-    res.redirect(`http://localhost:3000/main?access_token=${accessToken}`);
+    res.redirect(`${process.env.ORIGIN}/main?access_token=${accessToken}`);
 
     // res.status(200).send({
     //   accessToken: accessToken,
