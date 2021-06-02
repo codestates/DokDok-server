@@ -17,12 +17,20 @@ io.on('connection', (socket) => {
   socket.on('join', ({ roomId: room, userinfo }) => {
     socket.join(room);
     io.to(room).emit('onConnect', {
-      id: -1,
+      hello: 'hello',
       content: `${userinfo.nickname} 님이 입장했습니다.`,
     });
     socket.on('onSend', async (content) => {
       console.log(content);
-      io.to(room).emit('onReceive', { ...userinfo, content });
+      console.log(userinfo);
+      io.to(room).emit('onReceive', {
+        ...userinfo,
+        User: {
+          nickname: userinfo.nickname,
+          profile_image: userinfo.profileImage,
+        },
+        content,
+      });
       // 여기에 채팅 디비 저장하는거 넣고
       try {
         const chattingInfo = await Chatting.create({
@@ -39,7 +47,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
       socket.leave(room);
       io.to(room).emit('onDisconnect', {
-        id: -1,
+        hello: 'hello',
         content: `${userinfo.nickname} 님이 퇴장하셨습니다.`,
       });
     });

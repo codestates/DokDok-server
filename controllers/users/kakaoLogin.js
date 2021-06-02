@@ -38,7 +38,7 @@ const kakaoCallback = async (req, res) => {
         social_type: 'kakao',
         delflag: true,
         profile_image: userInfo.data.kakao_account.profile.is_default_image
-          ? null
+          ? 'https://practice-bucket-deploy7.s3.ap-northeast-2.amazonaws.com/CJdjtieUkAAR4e3.jpeg'
           : userInfo.data.kakao_account.profile.profile_image_url,
       },
     });
