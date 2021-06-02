@@ -5,9 +5,9 @@ const { hashPassword, generateAccessToken } = require('../../utils/userFunc');
 module.exports = async (req, res) => {
   const { nickname, password, profileImage } = req.body;
   console.log(req.file);
-  console.log(nickname, password, profileImage);
+  console.log(nickname, password, req.file);
 
-  if (!nickname && !password && !profileImage) {
+  if (!nickname && !password && !req.file) {
     return res.status(400).end();
   }
 
