@@ -23,7 +23,7 @@ module.exports = class User extends Model {
         profile_image: {
           type: DataTypes.STRING(300),
           default:
-            'https://practice-bucket-deploy7.s3.ap-northeast-2.amazonaws.com/CJdjtieUkAAR4e3.jpeg',
+            'https://practice-bucket-deploy7.s3.ap-northeast-2.amazonaws.com/default-profile-picture_150.jpg',
         },
         delflag: {
           type: DataTypes.BOOLEAN,

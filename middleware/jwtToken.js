@@ -20,12 +20,13 @@ module.exports = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
+
     if (error.name === 'TokenExpiredError') {
       console.error(error);
-      return res.status(401).send({ error });
+      return res.status(401).send({ message: error.name });
     } else {
       console.error(error);
-      return res.status(401).send({ error });
+      return res.status(401).send({ message: error.name });
     }
   }
 };
